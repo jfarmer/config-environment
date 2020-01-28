@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ "${__BASH_HAVE_DEFAULTS:-0}" = "0" ]; then
+  SECONDS="$(date '+%s')"
+  cp ~/.bash_profile ~/.bash_profile."${SECONDS}".backup
+  cp ./.bash_defaults ~/.bash_defaults
+
+  echo "[ -f ~/.bash_defaults ] && source ~/.bash_defaults" | cat - ~/.bash_profile > /tmp/.bash_profile.tmp && mv /tmp/.bash_profile.tmp ~/.bash_profile
+fi
