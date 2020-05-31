@@ -1,0 +1,43 @@
+{
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[python]": {
+		"editor.tabSize": 4
+	},
+	"editor.acceptSuggestionOnCommitCharacter": false,
+	"editor.acceptSuggestionOnEnter": "off",
+	"editor.copyWithSyntaxHighlighting": false,
+	"editor.fontFamily": "Menlo, Consolas, Monaco, 'Courier New', monospace",
+	"editor.fontSize": 14,
+	"editor.minimap.enabled": false,
+	"editor.suggestSelection": "recentlyUsedByPrefix",
+	"editor.tabSize": 2,
+	"eslint.alwaysShowStatus": true,
+	"eslint.format.enable": true,
+	"extensions.ignoreRecommendations": false,
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+	"files.trimTrailingWhitespace": true,
+	"html.format.endWithNewline": true,
+	"html.format.indentHandlebars": true,
+	"html.format.indentInnerHtml": true,
+	"liveshare.guestApprovalRequired": true,
+	"screencastMode.onlyKeyboardShortcuts": true,
+	"search.quickOpen.includeHistory": false,
+	"terminal.integrated.cursorBlinking": true,
+	"window.zoomLevel": 0,
+	"workbench.activityBar.visible": false,
+	"workbench.colorTheme": "One Dark Pro",
+	"workbench.editor.enablePreview": false,
+	"workbench.editor.enablePreviewFromQuickOpen": false,
+	"workbench.editor.highlightModifiedTabs": true,
+	"workbench.startupEditor": "none",
+    "workbench.statusBar.visible": true
+}

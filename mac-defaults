@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+
+source ./includes/functions
+
+if [[ $(get_platform_name) != "mac" ]];then
+  echo "This program only makes sense on macOS."
+  exit 1
+fi
+
+###############################################################################
+# Filesystem                                                                  #
+###############################################################################
+
+# Show Library folder in home directory
+chflags nohidden ~/Library
+
+###############################################################################
+# System Features                                                             #
+###############################################################################
+
+# Save screenshots as PNG files
+defaults write com.apple.screencapture type -string "png"
+
+# Check for software updates daily, not just once per week
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+# Disable Resume system-wide
+defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
+
+# Disable automatic app termination
+defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+
+# Expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+# Expand print panel by default
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+###############################################################################
+# Finder                                                                      #
+###############################################################################
+
+# Open to home directory by default
+defaults write com.apple.finder NewWindowTarget -string "PfHm"
+defaults write com.apple.finder NewWindowTargetPath "file://${HOME}"
+
+# Show path bar
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Show status bar
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Display full POSIX path as Finder window title
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+# Avoid creating .DS_Store files on network volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Use list view in all Finder windows by default
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+# Show disks, removable media, servers, etc. on Desktop
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+# Disable warning when changing file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+###############################################################################
+# Dock, Spaces, Mission Control, etc.                                         #
+###############################################################################
+
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+# Automatically hide the Dock
+defaults write com.apple.dock autohide -bool true
+
+# Show hidden applciations on the Dock
+defaults write com.apple.dock showhidden -bool true
+
+# Show process indictors
+defaults write com.apple.dock show-process-indicators -bool true
+
+# Hide "Recent Applications"
+defaults write com.apple.dock show-recents -bool false
+
+###############################################################################
+# Keyboard / Mouse                                                            #
+###############################################################################
+
+# Disable smart quotes (bad when typing/pasting code)
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# Disable smart dashes (bad when typing/pasting code)
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# Holding a key should repeat, not display Apple's context menu
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+# Faster key repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 2
+
+# Shorter delay before key starts repeating
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+###############################################################################
+# Terminal.app                                                                #
+###############################################################################
+
+# Import the IR_Black theme
+if [[ -f './IR_Black.terminal' ]];then
+  plutil -replace "Window Settings.IR_Black" -xml "$(<IR_Black.terminal)" ~/Library/Preferences/com.apple.Terminal.plist
+fi
+
+# Use the IR_Black theme by default
+defaults write com.apple.Terminal "Default Window Settings" -string "IR_Black"
+defaults write com.apple.Terminal "Startup Window Settings" -string "IR_Black"
+
+# Use UTF-8 encoding
+defaults write com.apple.Terminal StringEncodings -array 4
+
+# New windows open in same working directory
+defaults write com.apple.Terminal NewWindowWorkingDirectoryBehavior -int 2
+
+# New tabs open in same working directory
+defaults write com.apple.Terminal NewTabWorkingDirectoryBehavior -int 2
+
+###############################################################################
+# Activity Monitor.app                                                        #
+###############################################################################
+
+# Show all processes in ActivityMonitor
+defaults write com.apple.ActivityMonitor ShowCategory -int 100
+
+# Sort Activity Monitor results by CPU usage
+defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+defaults write com.apple.ActivityMonitor SortDirection -int 0
+
+# Set update period in seconds (defaults 5 seconds)
+defaults write com.apple.ActivityMonitor UpdatePeriod -int 2
+
+# Show Data in the Disk graph (instead of IO)
+defaults write com.apple.ActivityMonitor DiskGraphType -int 1
+
+# Show Data in the Network graph (instead of packets)
+defaults write com.apple.ActivityMonitor NetworkGraphType -int 1
+
+for app in "Activity Monitor" "cfprefsd" "Dock" "Finder" "SystemUIServer"; do
+  killall "${app}" > /dev/null 2>&1
+done

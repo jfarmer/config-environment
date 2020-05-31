@@ -2,7 +2,7 @@
 
 if [ "${__BASH_HAVE_DEFAULTS:-0}" = "0" ]; then
   SECONDS="$(date '+%s')"
-  
+
   touch ~/.bash_profile
 
   cp ~/.bash_profile ~/.bash_profile."${SECONDS}".backup

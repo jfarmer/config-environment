@@ -1,0 +1,177 @@
+#!/usr/bin/env bash
+
+# set -o errexit
+set -o pipefail
+
+source ./includes/functions
+
+VSCODE_APP_NAME="Visual Studio Code.app"
+VSCODE_APP_PATH="/Applications/${VSCODE_APP_NAME}"
+VSCODE_COMMAND="${VSCODE_APP_PATH}/Contents/Resources/app/bin/code"
+VSCODE_SYMLINK="/usr/local/bin/code"
+
+is_supported_platform() {
+  [[ "$(get_platform_name)" == "mac" ]]
+}
+
+check_is_homebrew_installed() {
+  command_exists "brew"
+}
+
+check_is_vscode_installed() {
+  [[ -d "${VSCODE_APP_PATH}" ]]
+}
+
+check_is_vscode_in_downloads() {
+  [[ -d "${HOME}/Downloads/${VSCODE_APP_NAME}" ]]
+}
+
+check_code_command_exists() {
+  which code &> /dev/null
+}
+
+get_appdata_dir() {
+  case "$(get_platform_name)" in
+    "mac")
+      echo "${HOME}/Library/Application Support"
+      ;;
+    "windows")
+      echo "${APPDATA}"
+      ;;
+  esac
+}
+
+get_vscode_appdata_dir() {
+  local appdata_dir="$(get_appdata_dir)"
+
+  echo "${appdata_dir}/Code/User"
+}
+
+copy_with_backup() {
+  if [[ $# -lt 2 ]];then
+    echo "copy_with_backup requires at least two arguments"
+    return 1
+  fi
+
+  local src=$1
+  local dest=$2
+
+  local dest_basename=$(basename "${dest}")
+  local dest_dirname=$(dirname "${dest}")
+  local seconds="$(date '+%s')"
+
+  local backup_file="${dest_basename%.*}.${seconds}.backup.${dest_basename##*.}"
+
+  if [[ ! -L "${dest}" ]];then
+    if [[ -f "${dest}" ]];then
+      cp "${dest}" "${dest_dirname}/${backup_file}"
+    fi
+
+    cp "${src}" "${dest}"
+  fi
+}
+
+is_code_command_installed() {
+  [[ -x "${VSCODE_COMMAND}" ]]
+}
+
+install_code_command() {
+  if [[ ! -x "${VSCODE_COMMAND}" ]];then
+    return 1
+  fi
+
+  # I'm _pretty_ sure this is all VS Code does when you tell it
+  # to install the 'code' command from inside the app itself.
+  ln -sf "${VSCODE_COMMAND}" "${VSCODE_SYMLINK}"
+}
+
+install_vscode_extension() {
+  code --install-extension $1 > /dev/null
+}
+
+install_required_vscode_extensions() {
+  install_vscode_extension "ms-vsliveshare.vsliveshare-pack" &&
+  install_vscode_extension "CoenraadS.bracket-pair-colorizer" &&
+  install_vscode_extension "dbaeumer.vscode-eslint" &&
+  install_vscode_extension "christian-kohler.npm-intellisense" &&
+  install_vscode_extension "eg2.vscode-npm-script" &&
+  install_vscode_extension "mohsen1.prettify-json"
+}
+
+if ! is_supported_platform;then
+  echo "This script won't work with your operating system. Sorry!"
+  exit 1
+fi
+
+if guard_mac "Checking for homebrew..." check_is_homebrew_installed;then
+  echo
+
+  echo "Homebrew is not installed. Follow the instructions, here:"
+  echo "  https://brew.sh/"
+
+  exit 1
+fi
+
+if guard_mac "Checking that /usr/local/bin is in PATH..." is_in_path "/usr/local/bin";then
+  echo
+
+  echo "Add /usr/local/bin to your PATH environment variable."
+  echo "You can do this yourself if you know how or you can use"
+  echo "the add-shell-config script in this repository."
+  echo
+  echo "If you choose to add-shell-script, please see README.md"
+  echo "for instructions."
+  echo
+
+  echo "After running add-shell-script you must restart the terminal."
+
+  exit 1
+fi
+
+if guard_mac "Checking for Visual Studio Code..." check_is_vscode_installed;then
+  echo
+
+  if check_is_vscode_in_downloads;then
+    echo "You have a copy of VS Code in your Downloads folder, here:"
+    echo "  ${HOME}/Downloads"
+    echo
+    echo "Please move it to /Applications and re-run this script."
+  else
+    echo "Please install Visual Studio Code by doing _one_ of the following:"
+    echo "  1. Downloading from https://code.visualstudio.com/download"
+    echo "  2. OR using homebrew with the following command:"
+    echo "       brew cask install visual-studio-code"
+  fi
+
+  exit 1
+fi
+
+if guard_mac "Installing VS Code command line utility..." install_code_command;then
+  echo
+  echo "Failed to install VS Code command line utility."
+  echo "There's something unusual about your setup. Find someone to ask for help."
+
+  exit 1
+fi
+
+if guard "Verifying VS Code command line utility..." check_code_command_exists;then
+  echo
+  echo "We cannot find the VS Code command line utility."
+  echo "There's something unusual about your setup. Find someone to ask for help."
+
+  exit 1
+fi
+
+if guard "Installing VS Code extensions..." install_required_vscode_extensions;then
+  echo
+  echo "Error installing VS Code extensions. Find someone to ask for help."
+
+  exit 1
+fi
+
+if guard "Copying VS Code settings..." copy_with_backup "./vscode/settings.json" "$(get_vscode_appdata_dir)/settings.json";then
+  echo
+  echo "Error copying VS Code settings. Find someone to ask for help."
+
+  exit 1
+fi
