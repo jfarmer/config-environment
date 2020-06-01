@@ -17,7 +17,7 @@ get_platform_name() {
     Darwin*)
       echo "mac"
       ;;
-    MINGW_NT*)
+    MINGW*)
       echo "windows"
       ;;
     *)
