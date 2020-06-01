@@ -111,7 +111,7 @@ create_file_backup() {
     return 1
   fi
 
-  local file_to_backup="${1}"
+  local file_to_backup=$1
 
   # If there's nothing to back up, just return
   if [[ ! -f "${file_to_backup}" ]];then
@@ -121,9 +121,19 @@ create_file_backup() {
   local backup_basename=$(basename "${file_to_backup}")
   local backup_dirname=$(dirname "${file_to_backup}")
 
-  local seconds="$(date '+%s')"
+  local seconds=$(date '+%s')
 
-  local backup_filename="${backup_basename%.*}.${seconds}.backup.${backup_basename##*.}"
+  local backup_prefix=$(echo "${backup_basename}" | cut -d. -f-1)
+  local backup_suffix=$(echo "${backup_basename}" | cut -s -d. -f2-)
+
+  echo "prefix: ${backup_prefix}"
+  echo "suffic: ${backup_suffix}"
+
+  local backup_filename="${backup_prefix}.${seconds}.backup"
+
+  if [[ -n "${backup_suffix}" ]];then
+    backup_filename="${backup_filename}.${backup_suffix}"
+  fi
 
   cp "${file_to_backup}" "${backup_dirname}/${backup_filename}"
 }
