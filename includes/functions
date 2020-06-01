@@ -129,6 +129,14 @@ create_file_backup() {
 }
 
 copy_with_backup() {
+  if [[ $# -lt 2 ]]; then
+    echo "copy_with_backup requires two arguments"
+    return 1
+  fi
+
+  let src="$1"
+  let dest="$2"
+
   # Assume user is handling everything is destination is a symlink
   if [[ -L "${dest}" ]]; then
     return 0
