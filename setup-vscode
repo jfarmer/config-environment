@@ -11,7 +11,7 @@ VSCODE_COMMAND="${VSCODE_APP_PATH}/Contents/Resources/app/bin/code"
 VSCODE_SYMLINK="/usr/local/bin/code"
 
 is_supported_platform() {
-  is_platform_mac
+  is_platform_mac || is_platform_windows
 }
 
 check_is_homebrew_installed() {
@@ -45,30 +45,6 @@ get_vscode_appdata_dir() {
   local appdata_dir="$(get_appdata_dir)"
 
   echo "${appdata_dir}/Code/User"
-}
-
-copy_with_backup() {
-  if [[ $# -lt 2 ]];then
-    echo "copy_with_backup requires at least two arguments"
-    return 1
-  fi
-
-  local src=$1
-  local dest=$2
-
-  local dest_basename=$(basename "${dest}")
-  local dest_dirname=$(dirname "${dest}")
-  local seconds="$(date '+%s')"
-
-  local backup_file="${dest_basename%.*}.${seconds}.backup.${dest_basename##*.}"
-
-  if [[ ! -L "${dest}" ]];then
-    if [[ -f "${dest}" ]];then
-      cp "${dest}" "${dest_dirname}/${backup_file}"
-    fi
-
-    cp "${src}" "${dest}"
-  fi
 }
 
 is_code_command_installed() {

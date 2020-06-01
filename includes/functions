@@ -6,6 +6,34 @@ fi
 
 __SETUP_INCLUDES_FUNCTIONS="yes"
 
+get_system_name() {
+  uname -s
+}
+
+get_platform_name() {
+  local system_name="$(get_system_name)"
+
+  case $system_name in
+    Darwin*)
+      echo "mac"
+      ;;
+    MINGW_NT*)
+      echo "windows"
+      ;;
+    *)
+      echo "unknown"
+      ;;
+  esac
+}
+
+is_platform_mac() {
+  [[ "$(get_platform_name)" == "mac" ]]
+}
+
+is_platform_windows() {
+  [[ "$(get_platform_name)" == "windows" ]]
+}
+
 RES_COL=54
 MOVE_TO_COL="echo -en \\033[${RES_COL}G"
 SETCOLOR_SUCCESS="echo -en \\033[1;32m"
@@ -77,26 +105,34 @@ command_exists () {
   type "$1" >/dev/null 2>&1
 }
 
-get_system_name() {
-  uname -s
+create_file_backup() {
+  if [[ $# -lt 1 ]];then
+    echo "create_file_backup requires the name of a file to back up"
+    return 1
+  fi
+
+  local file_to_backup="${1}"
+
+  # If there's nothing to back up, just return
+  if [[ ! -f "${file_to_backup}" ]];then
+    return 0
+  fi
+
+  local backup_basename=$(basename "${file_to_backup}")
+  local backup_dirname=$(dirname "${file_to_backup}")
+
+  local seconds="$(date '+%s')"
+
+  local backup_filename="${backup_basename%.*}.${seconds}.backup.${backup_basename##*.}"
+
+  cp "${file_to_backup}" "${backup_dirname}/${backup_filename}"
 }
 
-get_platform_name() {
-  local system_name="$(get_system_name)"
+copy_with_backup() {
+  # Assume user is handling everything is destination is a symlink
+  if [[ -L "${dest}" ]];then
+    return 0
+  fi
 
-  case $system_name in
-    Darwin*)
-      echo "mac"
-      ;;
-    MINGW_NT*)
-      echo "windows"
-      ;;
-    *)
-      echo "unknown"
-      ;;
-  esac
-}
-
-is_platform_mac() {
-  [[ "$(get_platform_name)" == "mac" ]]
+  create_file_backup "${dest}" && cp "${src}" "${dest}"
 }
