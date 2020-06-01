@@ -126,9 +126,6 @@ create_file_backup() {
   local backup_prefix=$(echo "${backup_basename}" | cut -d. -f-1)
   local backup_suffix=$(echo "${backup_basename}" | cut -s -d. -f2-)
 
-  echo "prefix: ${backup_prefix}"
-  echo "suffic: ${backup_suffix}"
-
   local backup_filename="${backup_prefix}.${seconds}.backup"
 
   if [[ -n "${backup_suffix}" ]];then
