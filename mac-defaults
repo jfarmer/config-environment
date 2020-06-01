@@ -169,8 +169,5 @@ defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 # Make Safari’s search banners default to Contains instead of Starts With
 defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
 
-for app in "Activity Monitor" "Safari" "cfprefsd" "Dock" "Finder" "SystemUIServer"; do
-  killall "${app}" >/dev/null 2>&1
-done
-
-echo "Defaults configured. Please restart your computer for all changes to take effect."
+echo "Defaults configured."
+echo "NOTE: You need to restart your computer for every change to take effect. Only some changes will take effect immediately."
