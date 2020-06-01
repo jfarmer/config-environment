@@ -10,5 +10,5 @@ if [[ is_platform_mac && "${__BASH_HAVE_DEFAULTS:-0}" == "0" ]]; then
   # The below requires that .bash_profile exists, even if it's empty
   touch ~/.bash_profile
 
-  echo "[ -f ~/.bash_defaults ] && source ~/.bash_defaults" | cat - ~/.bash_profile > /tmp/.bash_profile.tmp && mv /tmp/.bash_profile.tmp ~/.bash_profile
+  echo "[ -f ~/.bash_defaults ] && source ~/.bash_defaults" | cat - ~/.bash_profile >/tmp/.bash_profile.tmp && mv /tmp/.bash_profile.tmp ~/.bash_profile
 fi

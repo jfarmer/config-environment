@@ -2,7 +2,7 @@
 
 source ./includes/functions
 
-if ! is_platform_mac;then
+if ! is_platform_mac; then
   echo "This script only makes sense on macOS."
   exit 1
 fi
@@ -114,7 +114,7 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 15
 ###############################################################################
 
 # Import the IR_Black theme
-if [[ -f './IR_Black.terminal' ]];then
+if [[ -f './IR_Black.terminal' ]]; then
   plutil -replace "Window Settings.IR_Black" -xml "$(<IR_Black.terminal)" ~/Library/Preferences/com.apple.Terminal.plist
 fi
 
@@ -170,7 +170,7 @@ defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
 
 for app in "Activity Monitor" "Safari" "cfprefsd" "Dock" "Finder" "SystemUIServer"; do
-  killall "${app}" > /dev/null 2>&1
+  killall "${app}" >/dev/null 2>&1
 done
 
 echo "Defaults configured. Please quit Terminal entirely and re-open it for all changes to take effect."

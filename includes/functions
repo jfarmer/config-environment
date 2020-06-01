@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ "${__SETUP_INCLUDES_FUNCTIONS:-""}" == "yes" ]];then
+if [[ "${__SETUP_INCLUDES_FUNCTIONS:-""}" == "yes" ]]; then
   return 0
 fi
 
@@ -90,7 +90,7 @@ guard() {
 }
 
 guard_mac() {
-  if is_platform_mac;then
+  if is_platform_mac; then
     guard "$@"
   else
     return 1
@@ -101,12 +101,12 @@ is_in_path() {
   [[ ":${PATH}:" == *:"${1}":* ]]
 }
 
-command_exists () {
+command_exists() {
   type "$1" >/dev/null 2>&1
 }
 
 create_file_backup() {
-  if [[ $# -lt 1 ]];then
+  if [[ $# -lt 1 ]]; then
     echo "create_file_backup requires the name of a file to back up"
     return 1
   fi
@@ -114,7 +114,7 @@ create_file_backup() {
   local file_to_backup=$1
 
   # If there's nothing to back up, just return
-  if [[ ! -f "${file_to_backup}" ]];then
+  if [[ ! -f "${file_to_backup}" ]]; then
     return 0
   fi
 
@@ -128,7 +128,7 @@ create_file_backup() {
 
   local backup_filename="${backup_prefix}.${seconds}.backup"
 
-  if [[ -n "${backup_suffix}" ]];then
+  if [[ -n "${backup_suffix}" ]]; then
     backup_filename="${backup_filename}.${backup_suffix}"
   fi
 
@@ -137,7 +137,7 @@ create_file_backup() {
 
 copy_with_backup() {
   # Assume user is handling everything is destination is a symlink
-  if [[ -L "${dest}" ]];then
+  if [[ -L "${dest}" ]]; then
     return 0
   fi
 
