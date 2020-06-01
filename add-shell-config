@@ -2,7 +2,7 @@
 
 source ./includes/functions
 
-if [[ is_platform_mac && "${__BASH_HAVE_DEFAULTS:-0}" == "0"]]; then
+if [[ is_platform_mac && "${__BASH_HAVE_DEFAULTS:-0}" == "0" ]]; then
   SECONDS="$(date '+%s')"
 
   touch ~/.bash_profile
