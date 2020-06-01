@@ -134,8 +134,8 @@ copy_with_backup() {
     return 1
   fi
 
-  let src="$1"
-  let dest="$2"
+  local src="$1"
+  local dest="$2"
 
   # Assume user is handling everything is destination is a symlink
   if [[ -L "${dest}" ]]; then
