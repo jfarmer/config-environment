@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ "${__SETUP_INCLUDES_FUNCTIONS:-""}" == "yes" ]];then
+  return 0
+fi
+
+__SETUP_INCLUDES_FUNCTIONS="yes"
+
 RES_COL=54
 MOVE_TO_COL="echo -en \\033[${RES_COL}G"
 SETCOLOR_SUCCESS="echo -en \\033[1;32m"
@@ -56,7 +62,7 @@ guard() {
 }
 
 guard_mac() {
-  if [[ "$(get_platform_name)" == "mac" ]];then
+  if is_platform_mac;then
     guard "$@"
   else
     return 1
@@ -89,4 +95,8 @@ get_platform_name() {
       echo "unknown"
       ;;
   esac
+}
+
+is_platform_mac() {
+  [[ "$(get_platform_name)" == "mac" ]]
 }

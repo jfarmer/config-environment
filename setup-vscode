@@ -11,7 +11,7 @@ VSCODE_COMMAND="${VSCODE_APP_PATH}/Contents/Resources/app/bin/code"
 VSCODE_SYMLINK="/usr/local/bin/code"
 
 is_supported_platform() {
-  [[ "$(get_platform_name)" == "mac" ]]
+  is_platform_mac
 }
 
 check_is_homebrew_installed() {
