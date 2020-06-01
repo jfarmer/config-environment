@@ -3,7 +3,9 @@
 source ./includes/functions
 
 if [[ is_platform_mac && "${__BASH_HAVE_DEFAULTS:-0}" == "0" ]]; then
-  copy_with_backup ./.bash_defaults ~/.bash_defaults
+  create_file_backup ~/.bash_profile
+
+  cp ./.bash_defaults ~/.bash_defaults
 
   # The below requires that .bash_profile exists, even if it's empty
   touch ~/.bash_profile
