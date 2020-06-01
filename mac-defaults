@@ -173,4 +173,4 @@ for app in "Activity Monitor" "Safari" "cfprefsd" "Dock" "Finder" "SystemUIServe
   killall "${app}" >/dev/null 2>&1
 done
 
-echo "Defaults configured. Please quit Terminal entirely and re-open it for all changes to take effect."
+echo "Defaults configured. Please restart your computer for all changes to take effect."
