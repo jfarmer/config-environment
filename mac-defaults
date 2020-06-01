@@ -172,3 +172,5 @@ defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
 for app in "Activity Monitor" "Safari" "cfprefsd" "Dock" "Finder" "SystemUIServer"; do
   killall "${app}" > /dev/null 2>&1
 done
+
+echo "Defaults configured. Please quit Terminal entirely and re-open it for all changes to take effect."
