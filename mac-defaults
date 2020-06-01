@@ -170,4 +170,6 @@ defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
 
 echo "Defaults configured."
-echo "NOTE: You need to restart your computer for every change to take effect. Only some changes will take effect immediately."
+echo
+echo "NOTE: Only some changes will take effect immediately."
+echo "You must restart your computer for every change to take effect."
