@@ -22,9 +22,9 @@ In general, three things need to be true for these scripts to work:
 1. You've installed *git*
 1. You're using `bash` for your shell
 
-If you've done this already, great! See [Usage](#Usage) to get started. If you *haven't* don't it or aren't sure, don't worry, the scripts will stop if something isn't set up correctly and tell you how to set it up.
+If you've done this already, great! See [Usage](#Usage) to get started. If you *haven't* done it or aren't sure, don't worry, the scripts will stop if something isn't set up correctly and tell you how to set it up.
 
-If you know you haven't done the above then see [Detailed Prerequisites](#Detailed-Prerequisites) below.
+If you *know* you haven't done the above then see [Detailed Prerequisites](#Detailed-Prerequisites) below for how to install the prerequisites.
 
 ## Usage
 
