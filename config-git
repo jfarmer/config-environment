@@ -30,6 +30,26 @@ set_git_colors() {
   git config --global color.status.untracked "cyan"
 }
 
+set_git_aliases() {
+  git config --global alias.st "status -s" &&
+  git config --global alias.co "checkout" &&
+  git config --global alias.br "branch" &&
+  git config --global alias.hist "log --graph --date=short --pretty=format:\"%Cred%h%Creset | %Cgreen%ad%Creset | %Cblue[%an]%Creset %s%d\""
+}
+
+set_git_name_and_email() {
+  if [[ $# -lt 2 ]]; then
+    echo "set_git_name_and_email requires two arguments"
+    return 1
+  fi
+
+  let name="$1"
+  let email="$2"
+
+  git config --global user.name "${name}" &&
+  git config --global user.email "${email}"
+}
+
 confirm_prompt_github() {
   local GITHUB_FULL_NAME=$1
   local GITHUB_EMAIL=$2
@@ -76,6 +96,15 @@ if guard "Setting colors for 'git status' command..." set_git_colors; then
   exit 1
 fi
 
+if guard "Adding git aliases..." set_git_aliases; then
+  echo "Error running 'git alias'"
+  echo
+  echo "Something is unusual about your environment and we are"
+  echo "going to stop getting up git automatically."
+
+  exit 1
+fi
+
 until [[ "${PROMPT_CONFIRMED}" == "yes" ]]; do
   echo
   GITHUB_FULL_NAME=$(prompt "Enter your full name:")
@@ -101,5 +130,11 @@ done
 
 echo "Setting git name and email..."
 
-git config --global user.name "${GITHUB_FULL_NAME}"
-git config --global user.email "${GITHUB_EMAIL}"
+if guard "Setting git name and email..." set_git_name_and_email "${GITHUB_FULL_NAME}" "${GITHUB_EMAIL}"; then
+  echo "Error running 'git config'"
+  echo
+  echo "Something is unusual about your environment and we are"
+  echo "going to stop getting up git automatically."
+
+  exit 1
+fi
