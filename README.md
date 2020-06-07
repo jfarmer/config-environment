@@ -6,10 +6,25 @@ It will only run on macOS or Windows (via [GitBASH](https://gitforwindows.org/))
 
 ## Contents <!-- omit in toc -->
 
-- [Usage](#Usage)
 - [Prerequisites](#Prerequisites)
+- [Usage](#Usage)
+- [Detailed Prerequisites](#Detailed-Prerequisites)
   - [Windows](#Windows)
   - [Mac](#Mac)
+
+## Prerequisites
+
+These scripts are meant for absolute beginners. If you know how files like `~/.bash_profile` work then this (probably) isn't for you.
+
+In general, three things need to be true for these scripts to work:
+
+1. You've installed *Visual Studio Code*
+1. You've installed *git*
+1. You're using `bash` for your shell
+
+If you've done this already, great! See [Usage](#Usage) to get started. If you *haven't* don't it or aren't sure, don't worry, the scripts will stop if something isn't set up correctly and tell you how to set it up.
+
+If you know you haven't done the above then see [Detailed Prerequisites](#Detailed-Prerequisites) below.
 
 ## Usage
 
@@ -29,17 +44,10 @@ This will do a few things:
 1. Configure `git` to use your name + email address so that GitHub recognizes your commits
 1. On macOS, change some system settings to be more developer-friendly
 
-## Prerequisites
-
-These scripts are meant for absolute beginners. If you know how files like `~/.bash_profile` work then this (probably) isn't for you.
-
-In general, three things need to be true for these scripts to work:
-
-1. You've installed *Visual Studio Code*
-1. You've installed *git*
-1. You're using `bash` for your shell
 
 A *shell* is any program that implements a command-line interface. There are many shells one can use, but `bash` is the most common.
+
+## Detailed Prerequisites
 
 ### Windows
 
