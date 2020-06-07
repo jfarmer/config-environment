@@ -43,8 +43,8 @@ set_git_name_and_email() {
     return 1
   fi
 
-  let name="$1"
-  let email="$2"
+  local name="$1"
+  local email="$2"
 
   git config --global user.name "${name}" &&
   git config --global user.email "${email}"
