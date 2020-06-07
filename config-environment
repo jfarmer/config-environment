@@ -58,9 +58,12 @@ if is_platform_mac; then
 fi
 
 print_banner "Setup: Visual Studio Code"
-
 ./config-vscode || exit 1
 
 print_banner "Setup: Git"
-
 ./config-git || exit 1
+
+print_banner "All done!"
+echo "We are all done."
+echo
+echo "Restart your computer to ensure every change takes effect."
