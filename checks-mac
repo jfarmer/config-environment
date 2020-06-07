@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+source ./includes/functions
+
+check_is_homebrew_installed() {
+  command_exists "brew"
+}
+
+check_is_usr_local_in_path() {
+  is_in_path "/usr/local/bin"
+}
+
+if ! is_supported_platform; then
+  echo "This script won't work with your operating system. Sorry!"
+  exit 1
+fi
+
+if guard_mac "Checking for homebrew..." check_is_homebrew_installed; then
+  echo
+
+  echo "Homebrew is not installed. Follow the instructions, here:"
+  echo "  https://brew.sh/"
+
+  exit 1
+fi
+
+if guard_mac "Checking that /usr/local/bin is in PATH..." check_is_usr_local_in_path; then
+  echo
+
+  echo "Add /usr/local/bin to your PATH environment variable."
+  echo "You can do this yourself if you know how or you can use"
+  echo "the add-shell-config script in this repository."
+  echo
+  echo "If you choose to add-shell-script, please see README.md"
+  echo "for instructions."
+  echo
+
+  echo "After running add-shell-script you must restart the terminal."
+
+  exit 1
+fi

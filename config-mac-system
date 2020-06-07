@@ -114,8 +114,8 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 15
 ###############################################################################
 
 # Import the IR_Black theme
-if [[ -f './IR_Black.terminal' ]]; then
-  plutil -replace "Window Settings.IR_Black" -xml "$(<IR_Black.terminal)" ~/Library/Preferences/com.apple.Terminal.plist
+if [[ -f './mac/IR_Black.terminal' ]]; then
+  plutil -replace "Window Settings.IR_Black" -xml "$(<./mac/IR_Black.terminal)" ~/Library/Preferences/com.apple.Terminal.plist
 fi
 
 # Use the IR_Black theme by default

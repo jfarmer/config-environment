@@ -2,7 +2,11 @@
 
 source ./includes/functions
 
-if [[ is_platform_mac && "${__BASH_HAVE_DEFAULTS:-0}" == "0" ]]; then
+if ! is_platform_mac; then
+  exit 1
+fi
+
+if [[ "${__BASH_HAVE_DEFAULTS:-0}" == "0" && ! -f ~/.bash_defaults ]]; then
   create_file_backup ~/.bash_profile
 
   cp ./.bash_defaults ~/.bash_defaults

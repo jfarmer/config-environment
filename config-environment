@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+source ./includes/functions
+
+if ! is_supported_platform; then
+  echo "This script won't work with your operating system. Sorry!"
+  echo "Please run on either macOS or Windows (using GitBASH)."
+
+  exit 1
+fi
+
+echo "This script will set up a basic web development environment."
+
+if guard_mac "Configuring shell..." ./add-shell-config; then
+  echo "Unable to configure shell."
+  echo
+  echo "Something is unusual about your environment. We are"
+  echo "going to stop trying to configure your machine rather"
+  echo "than risk messing it up."
+
+  exit 1
+fi
+
+if is_platform_mac; then
+  print_banner "Verify: MacOS Base Configuration"
+  ./checks-mac || exit 1
+
+  print_banner "Setup: MacOS Developer Settings"
+  ./config-mac-system || exit 1
+fi
+
+print_banner "Setup: Visual Studio Code"
+
+./config-vscode || exit 1

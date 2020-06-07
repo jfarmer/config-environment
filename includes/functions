@@ -34,6 +34,10 @@ is_platform_windows() {
   [[ "$(get_platform_name)" == "windows" ]]
 }
 
+is_supported_platform() {
+  is_platform_mac || is_platform_windows
+}
+
 RES_COL=54
 MOVE_TO_COL="echo -en \\033[${RES_COL}G"
 SETCOLOR_SUCCESS="echo -en \\033[1;32m"
@@ -163,9 +167,21 @@ prompt_yes_no() {
 
 prompt() {
   local prompt_text=$1
-  local result;
+  local result
 
   read -p "${prompt_text} " result
 
   echo "${result}"
+}
+
+print_banner() {
+  local print_text=$1
+
+  printf '\n'
+  printf '#%0.s' {1..60}
+  printf '\n'
+  printf '# %-56s #\n' "${print_text}"
+  printf '#%0.s' {1..60}
+  printf '\n'
+  printf '\n'
 }
