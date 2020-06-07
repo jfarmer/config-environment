@@ -9,7 +9,35 @@ if ! is_supported_platform; then
   exit 1
 fi
 
+if ! is_shell_bash; then
+  SHELL_NAME=$(get_shell_name)
+
+  echo "You are using the '${SHELL_NAME}' shell, but these setup scripts"
+  echo "only work with the 'bash' shell. A 'shell' is any program that"
+  echo "powers a command-line interface (like the one you're using)."
+
+  echo
+
+  if is_platform_mac; then
+    echo "Run the following command to change your shell:"
+    echo
+    echo "  chsh -s /bin/bash"
+    echo
+    echo "Note: When prompted for your password, the command line gives"
+    echo "you no feedback that you're typing. Type your password and hit"
+    echo "enter. You should see _no_ additional output if successful."
+    echo
+    echo "Close the terminal and re-open it for the change to take effect."
+  else
+    echo "Look up instructions on your platform for how to change your"
+    echo "shell to bash."
+  fi
+
+  exit 1
+fi
+
 echo "This script will set up a basic web development environment."
+
 
 if guard_mac "Configuring shell..." ./add-shell-config; then
   echo "Unable to configure shell."

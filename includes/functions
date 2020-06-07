@@ -6,6 +6,14 @@ fi
 
 __SETUP_INCLUDES_FUNCTIONS="yes"
 
+get_shell_name() {
+  echo "${SHELL##*/}"
+}
+
+is_shell_bash() {
+  [[ "$(get_shell_name)" == "bash" ]]
+}
+
 get_system_name() {
   uname -s
 }
