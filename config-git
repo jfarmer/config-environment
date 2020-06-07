@@ -24,37 +24,12 @@ set_git_colors() {
   git config --global color.status.untracked "cyan"
 }
 
-prompt_yes_no() {
-  local response=$(prompt "$@")
-
-  case "${response}" in
-    y|yes)
-      echo "yes"
-      ;;
-    n|no)
-      echo "no"
-      ;;
-    *)
-      echo "unknown"
-    ;;
-  esac
-}
-
-prompt() {
-  local prompt_text=$1
-  local result;
-
-  read -p "${prompt_text} " result
-
-  echo "${result}"
-}
-
 confirm_prompt_github() {
   local GITHUB_FULL_NAME=$1
   local GITHUB_EMAIL=$2
   local prompt_confirmed
 
-  echo "The author section of your git activity will look like thiasdasds:"
+  echo "The author section of your git activity will look like this:"
   echo
   echo "  '${GITHUB_FULL_NAME} <${GITHUB_EMAIL}>'"
   echo
@@ -68,8 +43,6 @@ confirm_github_name_and_email() {
   local GITHUB_EMAIL=$(prompt "Enter the email address you use on GitHub:")
 
   local prompt_confirmed=$(confirm_prompt_github "$GITHUB_FULL_NAME" "$GITHUB_EMAIL")
-
-  echo "result is: ${prompt_confirmed}"
 
   case "$prompt_confirmed" in
     yes)
