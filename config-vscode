@@ -107,9 +107,9 @@ if guard "Installing VS Code extensions..." install_required_vscode_extensions;t
   exit 1
 fi
 
-# if guard "Copying VS Code settings..." copy_with_backup "./vscode/settings.json" "$(get_vscode_appdata_dir)/settings.json";then
-#   echo
-#   echo "Error copying VS Code settings. Find someone to ask for help."
+if guard "Copying VS Code settings..." copy_with_backup "./vscode/settings.json" "$(get_vscode_appdata_dir)/settings.json";then
+  echo
+  echo "Error copying VS Code settings. Find someone to ask for help."
 
-#   exit 1
-# fi
+  exit 1
+fi
