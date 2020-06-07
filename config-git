@@ -61,8 +61,14 @@ confirm_github_name_and_email() {
     esac
 }
 
-echo "Configuring git..."
-set_git_colors
+if guard "Setting colors for 'git status' command..." set_git_colors; then
+  echo "Error running 'git config'"
+  echo
+  echo "Something is unusual about your environment and we are"
+  echo "going to stop getting up git automatically."
+
+  exit 1
+fi
 
 until [[ "${PROMPT_CONFIRMED}" == "yes" ]]; do
   echo
