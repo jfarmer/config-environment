@@ -128,6 +128,8 @@ until [[ "${PROMPT_CONFIRMED}" == "yes" ]]; do
   esac
 done
 
+echo
+
 if guard "Setting git name and email..." set_git_name_and_email "${GITHUB_FULL_NAME}" "${GITHUB_EMAIL}"; then
   echo "Error running 'git config'"
   echo
