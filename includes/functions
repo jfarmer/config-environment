@@ -144,3 +144,28 @@ copy_with_backup() {
 
   create_file_backup "${dest}" && cp "${src}" "${dest}"
 }
+
+prompt_yes_no() {
+  local response=$(prompt "$@")
+
+  case "${response}" in
+    y|yes)
+      echo "yes"
+      ;;
+    n|no)
+      echo "no"
+      ;;
+    *)
+      echo "unknown"
+    ;;
+  esac
+}
+
+prompt() {
+  local prompt_text=$1
+  local result;
+
+  read -p "${prompt_text} " result
+
+  echo "${result}"
+}
