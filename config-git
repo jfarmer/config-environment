@@ -7,6 +7,12 @@ if ! command_exists "git"; then
   echo
   echo "Please verify your git installation before running this script."
 
+  if is_platform_mac; then
+    echo
+    echo "Run the following command to install git:"
+    echo "  brew install git"
+  fi
+
   exit 1
 fi
 
