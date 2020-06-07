@@ -39,7 +39,7 @@ fi
 echo "This script will set up a basic web development environment."
 
 
-if guard_mac "Configuring shell..." ./add-shell-config; then
+if guard_mac "Configuring shell..." ./config-shell; then
   echo "Unable to configure shell."
   echo
   echo "Something is unusual about your environment. We are"
