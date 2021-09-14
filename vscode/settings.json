@@ -13,6 +13,7 @@
 	},
 	"editor.acceptSuggestionOnCommitCharacter": false,
 	"editor.acceptSuggestionOnEnter": "off",
+	"editor.bracketPairColorization.enabled": true,
 	"editor.copyWithSyntaxHighlighting": false,
 	"editor.fontFamily": "Menlo, Consolas, Monaco, 'Courier New', monospace",
 	"editor.fontSize": 14,

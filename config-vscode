@@ -59,7 +59,6 @@ install_vscode_extension() {
 
 install_required_vscode_extensions() {
   install_vscode_extension "ms-vsliveshare.vsliveshare-pack" &&
-  install_vscode_extension "CoenraadS.bracket-pair-colorizer" &&
   install_vscode_extension "dbaeumer.vscode-eslint" &&
   install_vscode_extension "christian-kohler.npm-intellisense" &&
   install_vscode_extension "eg2.vscode-npm-script" &&
