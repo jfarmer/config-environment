@@ -1,0 +1,27 @@
+## Common commands
+alias ls='ls -FG'         # Colored ls
+alias grep='grep --color' # Colored grep
+alias pgrep='pgrep -lf'   # Display long output + arguments
+alias curls='curl -s'     # Disable progress in curl
+
+## Alias find to bfs if it's installed
+## See https://github.com/tavianator/bfs
+if command_exists "bfs"; then
+   alias find="bfs"
+fi
+
+## Edit config files
+alias bash-edit="code -n ~/.bashrc ~/.bash_profile ~/.aliases"
+alias zsh-edit="code -n ~/.zshenv ~/.zprofile ~/.zshrc ~/.aliases ~/.zprompt.zsh"
+
+## Git aliases
+alias git-clean='git gc --prune=now && git fetch -p'
+
+## Show all history by default in zsh
+if [[ -n "$ZSH_VERSION" ]]; then
+   alias history='history 1'
+fi
+
+## Coding
+alias code='code -n'
+alias c='code -n'
